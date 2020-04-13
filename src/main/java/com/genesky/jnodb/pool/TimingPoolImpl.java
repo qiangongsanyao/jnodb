@@ -189,7 +189,7 @@ public class TimingPoolImpl implements TimingPool {
 		} else {
 			Value mvalue = new Value();
 			mvalue.obj = value;
-			pool.put(key, mvalue);
+			safeput(key, mvalue);
 			return null;
 		}
 	}
