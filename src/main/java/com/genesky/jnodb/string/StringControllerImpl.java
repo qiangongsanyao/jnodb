@@ -1,12 +1,14 @@
 package com.genesky.jnodb.string;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.genesky.jnodb.condition.RestEnableCondition;
 import com.genesky.jnodb.error.CheckErrorException;
 
 import io.swagger.annotations.Api;
@@ -16,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api("String Controller")
+@Conditional(RestEnableCondition.class)
 public class StringControllerImpl implements StringController {
 
 	@Autowired

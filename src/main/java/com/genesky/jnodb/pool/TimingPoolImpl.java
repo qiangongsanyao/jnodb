@@ -1,24 +1,19 @@
 package com.genesky.jnodb.pool;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
 
 import com.genesky.jnodb.error.CheckErrorException;
 import com.genesky.jnodb.tools.CheckTools;
 
-@Component
 public class TimingPoolImpl implements TimingPool {
 
 	/**
 	 * 所有对不存在值的修改请加锁<br/>
 	 * 所有删除请加锁
 	 */
-	Map<String, Value> pool = new ConcurrentHashMap<String, Value>();
+	JMap pool = new JMap();
 
 	/**
 	 * 定时删除任务
@@ -66,12 +61,7 @@ public class TimingPoolImpl implements TimingPool {
 	 * @param value
 	 */
 	private void safedel(String key, Value value) {
-		synchronized (pool) {
-			Value tvalue = pool.get(key);
-			if (tvalue != null && tvalue == value) {
-				pool.remove(key);
-			}
-		}
+		pool.safedel(key, value);
 	}
 
 	@Override
@@ -163,15 +153,7 @@ public class TimingPoolImpl implements TimingPool {
 	}
 
 	private void safeput(String key, Value mvalue) {
-		mvalue = pool.putIfAbsent(key, mvalue);
-		/**
-		 * 如果该key已存在，加锁后操作
-		 */
-		if (mvalue != null) {
-			synchronized (pool) {
-				pool.put(key, mvalue);
-			}
-		}
+		pool.safeput(key, mvalue);
 	}
 
 	@SuppressWarnings("unchecked")

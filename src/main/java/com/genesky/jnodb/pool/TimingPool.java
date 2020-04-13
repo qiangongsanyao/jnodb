@@ -56,7 +56,12 @@ public interface TimingPool {
 	 *         的剩余生存时间。
 	 */
 	default int ttl(String key) {
-		return (int) (pttl(key) / 1000);
+		long time = pttl(key);
+		if (time > 0) {
+			return (int) (pttl(key) / 1000);
+		} else {
+			return (int) time;
+		}
 	}
 
 	/**

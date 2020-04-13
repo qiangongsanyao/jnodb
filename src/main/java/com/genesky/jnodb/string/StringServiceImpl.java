@@ -1,25 +1,32 @@
 package com.genesky.jnodb.string;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import com.genesky.jnodb.pool.PoolConfiguration;
 import com.genesky.jnodb.pool.TimingPool;
 
 @Service
+@Order(0)
 public class StringServiceImpl implements StringService {
 
 	@Autowired
-	TimingPool pool;
+	PoolConfiguration configuration;
+
+	TimingPool pool() {
+		return configuration.pool();
+	}
 
 	@Override
 	public boolean set(String key, String value) {
-		pool.set(key, value);
+		pool().set(key, value);
 		return true;
 	}
 
 	@Override
 	public String get(String key) {
-		String result = pool.get(key, String.class);
+		String result = pool().get(key, String.class);
 		return result;
 	}
 
@@ -32,12 +39,12 @@ public class StringServiceImpl implements StringService {
 		if (px != null) {
 			time = px;
 		}
-		return pool.set(key, value, time, nx, xx);
+		return pool().set(key, value, time, nx, xx);
 	}
 
 	@Override
 	public String getset(String key, String value) {
-		return pool.getset(key, value);
+		return pool().getset(key, value);
 	}
 
 	@Override
