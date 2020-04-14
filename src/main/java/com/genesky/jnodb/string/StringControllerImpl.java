@@ -1,5 +1,7 @@
 package com.genesky.jnodb.string;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +77,13 @@ public class StringControllerImpl implements StringController {
 	public String getrange(@RequestParam String key, @RequestParam int start, @RequestParam int end) {
 		checkParams(key);
 		return service.getrange(key, start, end);
+	}
+
+	@Override
+	@GetMapping("/mget")
+	public List<String> mget(List<String> keys) {
+		checkParams("mget", keys);
+		return service.mget(keys);
 	}
 
 }

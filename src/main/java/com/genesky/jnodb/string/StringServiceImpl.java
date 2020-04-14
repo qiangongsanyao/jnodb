@@ -1,5 +1,8 @@
 package com.genesky.jnodb.string;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -66,6 +69,11 @@ public class StringServiceImpl implements StringService {
 			return value.substring(start, end + 1);
 		}
 		return "";
+	}
+
+	@Override
+	public List<String> mget(List<String> keys) {
+		return keys.stream().map(this::get).collect(Collectors.toList());
 	}
 
 }

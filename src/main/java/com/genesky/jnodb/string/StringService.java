@@ -1,5 +1,7 @@
 package com.genesky.jnodb.string;
 
+import java.util.List;
+
 public interface StringService {
 
 	/**
@@ -56,5 +58,13 @@ public interface StringService {
 	 *         forth.
 	 */
 	String getrange(String key, int start, int end);
+
+	/**
+	 * Get values of given keys
+	 * 
+	 * @param key
+	 * @return the values of given keys
+	 */
+	List<String> mget(List<String> keys);
 
 }

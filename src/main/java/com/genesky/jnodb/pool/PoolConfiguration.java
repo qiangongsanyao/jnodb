@@ -24,7 +24,7 @@ public class PoolConfiguration {
 		return getDatabase(database);
 	}
 
-	private TimingPool getDatabase(int database) {
+	public TimingPool getDatabase(int database) {
 		TimingPool pool = pools.get(database);
 		if (pool == null) {
 			synchronized (pools) {

@@ -1,5 +1,7 @@
 package com.genesky.jnodb.string;
 
+import java.util.List;
+
 public interface StringController {
 
 	/**
@@ -10,6 +12,15 @@ public interface StringController {
 	 */
 	String get(String key);
 
+	/**
+	 * Get values of given keys
+	 * 
+	 * @param key
+	 * @return the values of given keys
+	 */
+	List<String> mget(List<String> keys);
+
+	
 	/**
 	 * Set the value of key!<br/>
 	 * 设置指定 key 的值
